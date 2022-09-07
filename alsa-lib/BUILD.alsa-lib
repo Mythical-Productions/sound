@@ -1,0 +1,42 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
+
+filegroup(
+    name="all_srcs",
+    srcs = glob(
+        ["alsa-lib-1.2.6.1/" + i for i in ["*",
+                                           "alsalisp/**",
+                                           "aserver/**",
+                                           "doc/**",
+                                           "include/*.h*",
+                                           "include/Makefile*",
+                                           "include/sound/**",
+                                           "m4/**",
+                                           "modules/**",
+                                           "src/**",
+                                           "test/**",
+                                           "utils/**",
+                                           ]
+         ],
+        allow_empty=False),
+)
+
+configure_make(
+    name = "alsa-lib",
+    install_prefix = "install",
+    lib_source = ":all_srcs",
+    visibility=["//visibility:public"],
+    configure_options = [
+        "--enable-shared=no",
+        "--enable-static=yes",
+        "--with-configdir=/usr/share/alsa",
+        "--with-plugindir=/usr/lib/x86_64-linux-gnu",
+        "--with-libdl=yes",
+    ],
+    # linkopts=["-ldl",],
+    configure_in_place = False,
+    out_static_libs=["libasound.a",
+                     "libatopology.a"],
+    # out_shared_libs=["libasound.so",
+    #                  "libatopology.so"],
+    targets=["", "install-exec"],
+)

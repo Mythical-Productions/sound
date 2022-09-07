@@ -1,3 +1,4 @@
+
 #include <alsa/asoundlib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -68,6 +69,7 @@ void midi_action(snd_seq_t *seq_handle, int *oportid) {
 
 int main(int argc, char *argv[]) {
 
+  setenv("ALSA_PLUGIN_DIR", "/usr/lib/x86_64-linux-gnu/alsa-lib/", 0);
   snd_seq_t *seq_handle;
   int npfd;
   struct pollfd *pfd;
