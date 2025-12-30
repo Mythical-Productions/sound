@@ -1,13 +1,13 @@
 cc_binary(
   name = "reflect",
-  deps = ["@com_google_absl//absl/strings"],
+  deps = ["@abseil-cpp//absl/strings"],
   srcs = ["reflect.cc"],
 )
 
 cc_binary(
     name="seq",
     srcs = ["seq.c"],
-    deps = ["@alsa-lib",],
+    deps = ["@alsa_lib",],
     linkopts = ["-ldl"],
     # linkshared=True,
 )
@@ -15,6 +15,6 @@ cc_binary(
 cc_binary(
     name="sender",
     srcs = ["sender.c"],
-    deps = ["@alsa-lib",],
+    deps = ["@alsa_lib",],
     linkopts = ["-ldl"],
 )

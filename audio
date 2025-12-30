@@ -5,26 +5,14 @@
 case $1 in
 
   start )
-    echo Starting JACK...
-
-    # Start JACK
-    # As of Ubuntu 12.10, a period of 128 is needed for good fluidsynth
-    # timing.  (jackd 1.9.9, fluidsynth 1.1.5)
-    # If you aren't running pulseaudio, you can remove the pasuspender line.
-    pasuspender -- \
-        jackd -d alsa --device hw:0,1 --rate 44100 --period 128 \
-            &>/tmp/jackd.out &
-
-    sleep .5
-
     echo Starting fluidsynth...
 
     # Start fluidsynth
-    fluidsynth --server --no-shell -p "fluidsynth 1" --audio-driver=jack \
+    tmux new-[window -- 'fluidsynth --server --no-shell -p "fluidsynth 1" --audio-driver=jack \
         --connect-jack-outputs --reverb=0 --chorus=0 --gain=0.8 \
         -o midi.autoconnect=false \
         /usr/share/sounds/sf2/FluidR3_GM.sf2 \
-        &>/tmp/fluidsynth.out &
+        &>/tmp/fluidsynth.out'
 
     sleep 1
 
